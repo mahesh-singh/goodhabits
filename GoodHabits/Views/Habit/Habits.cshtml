@@ -1,0 +1,64 @@
+﻿@model IEnumerable<GoodHabits.Models.Habit>
+
+@{
+    ViewBag.Title = "Habits";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>My Habits</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>
+            Your Habits
+        </th>
+        <th>
+            On
+        </th>
+        
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "Edit",new { id = item.ID })
+            </td>
+            <td>
+                @if (item.Mon) 
+                {
+                    <text>Monday,</text>
+                }
+                @if (item.Tue)
+                {
+                    <text>Tuesday,</text>
+                }
+                @if (item.Wed)
+                {
+                    <text>Wednesday,</text>
+                }
+                @if (item.Thr)
+                {
+                    <text>Thursday,</text>
+                }
+                @if (item.Fri)
+                {
+                    <text>Friday,</text>
+                }
+                @if (item.Sat)
+                {
+                    <text>Saturday,</text>
+                }
+                @if (item.Sun)
+                {
+                    <text>Sunday,</text>
+                }
+            </td>
+            
+        </tr>
+    }
+
+</table>

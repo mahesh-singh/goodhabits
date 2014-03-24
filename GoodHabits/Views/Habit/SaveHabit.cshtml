@@ -1,0 +1,65 @@
+﻿@using System.Web.Optimization
+
+@model GoodHabits.Models.Habit
+
+@{
+    ViewBag.Title = "CreateHabit";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+
+
+<h2>CreateHabit</h2>
+
+@using (Html.BeginForm("SaveHabit", "Habit", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(x=>x.ID)
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, "Habit",  new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-9">
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder="Habit" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Sun, "On", new { @class = "col-sm-2 control-label" })
+            <div class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Sun) Sun
+            </div>
+            <div class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Mon) Mon
+            </div>
+            <div class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Tue) Tue
+            </div>
+            <div class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Wed) Wed
+            </div>
+            <div class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Thr) Thr
+            </div>
+            <div class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Fri) Fri
+            </div>
+            <div class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Sat) Sat
+            </div>
+        </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+        
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

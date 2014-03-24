@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel='stylesheet' href='@Url.Content("~/Content/bootstrap/css/bootstrap.min.css")'>
+
+    <title>Create good habits</title>
+
+</head>
+<body>
+<nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img src="@Url.Content("~/Content/img/LH_logo.png")" style="max-width:32px;"/> 
+                    GoodHabit
+                </a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/habit/all">My Habits</a></li>
+                <li><a href="/Habit/track">Track</a></li>                
+            </ul>
+</div>
+</nav>
+        <div class="container">
+            @RenderBody()
+        </div>
+        <script src="@Url.Content("~/Scripts/jquery-2.1.0.min.js")"></script>
+        <script src="@Url.Content("~/Content/bootstrap/js/bootstrap.min.js")"></script>
+
+        @RenderSection("Scripts", false)
+
+</body>
+</html>

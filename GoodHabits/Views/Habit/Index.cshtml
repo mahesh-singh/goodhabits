@@ -1,0 +1,86 @@
+﻿@using GoodHabits.Models
+@model GoodHabits.Models.HomeViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+
+<h2>Create good habits</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Your habits
+            </th>
+            @for (int i = -14; i < 1; i++)
+            {
+                <th>
+                    @DateTime.Now.AddDays(i).Date.ToString("MM/dd")
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Habit habit in Model.Habits)
+        {
+            <tr>
+                <td>
+                    @habit.Name
+                </td>
+
+                @for (int i = -14; i < 1; i++)
+                {
+                    <td>
+                        @{
+
+                    int status = 0;
+                    if (Model.TrackerData.ContainsKey(DateTime.Now.AddDays(i).Date))
+                    {
+                        var tracks = Model.TrackerData[DateTime.Now.AddDays(i).Date];
+                        var track = tracks.Where(x => x.HabitID == habit.ID).SingleOrDefault();
+                        if (track != null)
+                        {
+                            status = track.Status;
+                        }
+                    }
+                        }
+                        @if (status == 1)
+                        {
+                            <span class="glyphicon glyphicon-ok-circle" style="color: #47a447;"></span>
+                        }
+                        else if (status == 2)
+                        {
+                            <span class="glyphicon glyphicon-remove-circle" style="color: #ac2925; "></span>
+                        }
+                        else if (status == 3)
+                        {
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+
+                        }
+                    </td>
+                }
+            </tr>
+
+        }
+    </tbody>
+
+</table>
+<hr />
+<ul class="list-inline">    
+    <li><span class="glyphicon glyphicon-ok-circle" style="color: #47a447;"></span></li>
+    <li>Complete</li>
+</ul>
+<ul class="list-inline">
+    <li><span class="glyphicon glyphicon-remove-circle" style="color: #ac2925; "></span></li>
+    <li>Skip</li>
+</ul>
+<ul class="list-inline">
+    <li><span class="glyphicon glyphicon-ban-circle"></span></li>
+    <li>Miss</li>
+</ul>
+
+

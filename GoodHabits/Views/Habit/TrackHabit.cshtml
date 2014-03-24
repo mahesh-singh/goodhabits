@@ -1,0 +1,88 @@
+﻿@using GoodHabits.Extensions
+
+@model IEnumerable<GoodHabits.Models.Habit>
+
+
+@{
+    ViewBag.Title = "TrackHabit";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Track my habbits</h2>
+
+<form class="form-horizontal" role="form">
+    <input type="hidden" id="activityDate" value="@ViewBag.date" />
+
+    @foreach (var item in Model)
+    {
+        
+            <div class="form-group">
+                <label for="status" class="col-sm-2 control-label">@item.Name</label>
+                <div class="col-sm-10">
+                    @if (item.SelectedDateTrackerData != null)
+                        {
+                                    @Html.DropDownList("Status",
+                                    HtmlHelperExtensions.GetSelectListItems(item.SelectedDateTrackerData.Status),
+                                         new { data_habitid = item.ID })
+                        }
+                        else
+                        {
+                                    @Html.DropDownList("Status", HtmlHelperExtensions.GetSelectListItems(0), new { data_habitid = item.ID })
+                        }
+                </div>
+            
+
+        </div>
+    }
+
+</form>
+    <button type="button" id="btnSave" class="btn btn-success">Save</button>
+
+    @section Scripts {
+        <script type="text/javascript">
+
+            jQuery(document).ready(function () {
+                $("#btnSave").click(function () {
+                    saveTrackerData();
+                });
+            });;
+
+            function saveTrackerData() {
+                var trackerData = new Array();
+
+                $('select[data-habitid]').each(function (index, element) {
+                    var habitid = $(element).data('habitid');
+                    var selectedStatusValue = $(element).val();
+
+                    var item = {}
+                    item["HabitID"] = habitid;
+                    item["Status"] = selectedStatusValue;
+                    item["ActivityDate"] = $(activityDate).val();
+                    trackerData.push(item);
+                });
+
+                var trackerDataJSON = JSON.stringify(trackerData);
+
+                var options = {
+                    error: function (msg, status) {
+                        if (status === "error") {
+                            alert("Error");
+                        }
+                    },
+                    type: "POST",
+                    data: trackerDataJSON,
+                    url: "/Habit/SaveHabitTracker",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+
+                        location.href = "/";
+
+                    }
+                };
+
+                jQuery.ajax(options);
+            }
+
+
+        </script>
+    }
